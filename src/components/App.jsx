@@ -2,12 +2,12 @@
 // import React, { Component } from 'react';
 
 import React, { useState, useEffect } from 'react';
-import SearchBar from './SearchBar/SearchBar';
-import ImageGallery from './ImageGallery/ImageGallery';
-import Button from './Button/Button';
-import Modal from './Modal/Modal';
-import Loader from './Loader/Loader';
-import fetchImages from '../services/fetchImages';
+import {SearchBar} from './SearchBar/SearchBar';
+import {ImageGallery} from './ImageGallery/ImageGallery';
+import {Button} from './Button/Button';
+import {Modal} from './Modal/Modal';
+import {Loader} from './Loader/Loader';
+import {fetchImages} from '../services/fetchImages';
 
 export function App() {
   const [images, setImages] = useState([]);
