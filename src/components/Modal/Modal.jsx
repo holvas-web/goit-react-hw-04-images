@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 
-export function Modal({ image, onClose }) {
+export function Modal ({ image, onClose }) {
   const handleKeyDown = useCallback (e => {
     if (e.code === 'Escape') {
       onClose();

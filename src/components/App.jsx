@@ -1,13 +1,12 @@
 // ======= Рефакторинг коду з використанням React-хуків ========
 // import React, { Component } from 'react';
-
-import React, { useState, useEffect } from 'react';
-import {SearchBar} from './SearchBar/SearchBar';
-import {ImageGallery} from './ImageGallery/ImageGallery';
-import {Button} from './Button/Button';
-import {Modal} from './Modal/Modal';
-import {Loader} from './Loader/Loader';
-import {fetchImages} from '../services/fetchImages';
+import React, { useState, useEffect, useRef } from 'react';
+import { SearchBar } from './SearchBar/SearchBar';
+import { ImageGallery } from './ImageGallery/ImageGallery';
+import { Button } from './Button/Button';
+import { Modal } from './Modal/Modal';
+import { Loader } from './Loader/Loader';
+import { fetchImages } from '../services/fetchImages';
 
 export function App() {
   const [images, setImages] = useState([]);
@@ -16,30 +15,45 @@ export function App() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  // useRef для збереження попереднього запиту
+  const prevQueryRef = useRef('');
+
   useEffect(() => {
     if (!query) return;
 
     const fetchImagesData = async () => {
       setIsLoading(true);
-      const newImages = await fetchImages(query, page);
-      setImages(prevImages => [...prevImages, ...newImages]);
-      setIsLoading(false);
+      try {
+        const newImages = await fetchImages(query, page);
+        setImages((prevImages) => [...prevImages, ...newImages]);
+      } catch (error) {
+        console.error('Error fetching images:', error);
+        alert('An error occurred while fetching images.');
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    fetchImagesData();
+    if (query !== prevQueryRef.current) {
+      setImages([]);
+      setPage(1);
+      fetchImagesData();
+      prevQueryRef.current = query;
+    } else {
+      alert(`You are already viewing results for ${query}`);
+    }
   }, [query, page]);
 
-  const handleSearchFormSubmit = newQuery => {
+  const handleSearchFormSubmit = (newQuery) => {
     setQuery(newQuery);
     setPage(1);
-    setImages([]);
   };
 
   const handleLoadMoreClick = () => {
-    setPage(prevPage => prevPage + 1);
+    setPage((prevPage) => prevPage + 1);
   };
 
-  const handleImageClick = image => {
+  const handleImageClick = (image) => {
     setSelectedImage(image);
   };
 
@@ -52,15 +66,12 @@ export function App() {
       <SearchBar onSubmit={handleSearchFormSubmit} />
       <ImageGallery images={images} onImageClick={handleImageClick} />
       {isLoading && <Loader />}
-      {images.length > 0 && !isLoading && (
-        <Button onClick={handleLoadMoreClick} />
-      )}
-      {selectedImage && (
-        <Modal image={selectedImage} onClose={handleCloseModal} />
-      )}
+      {images.length > 0 && !isLoading && <Button onClick={handleLoadMoreClick}>Load More</Button>}
+      {selectedImage && <Modal image={selectedImage} onClose={handleCloseModal} />}
     </div>
   );
 }
+
 
 
 //=========== Попередній код ===========
