@@ -80,7 +80,7 @@ ul {
   width: 48px;
   height: 48px;
   border: 0;
-  background-image: url('./components/Searchbar/search.svg');
+  background-image: url('./components/SearchBar/search.svg');
   background-size: 60%;
   background-repeat: no-repeat;
   background-position: center;
@@ -184,7 +184,7 @@ ul {
   max-height: calc(100vh - 24px);
 }
 
-/* Стили компонента Buton (Load more) */
+/* Стили компонента Button (Load more) */
 .load-more-button {
   max-width: 10%;
   margin: 0 auto;
