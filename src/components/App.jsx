@@ -45,8 +45,12 @@ export function App() {
   }, [query, page]);
 
   const handleSearchFormSubmit = (newQuery) => {
-    setQuery(newQuery);
-    setPage(1);
+    if (newQuery !== query) {
+      setQuery(newQuery);
+      setPage(1);
+    } else {
+      alert(`You are already viewing results for ${query}`);
+    }
   };
 
   const handleLoadMoreClick = () => {
@@ -71,6 +75,7 @@ export function App() {
     </div>
   );
 }
+
 
 
 
