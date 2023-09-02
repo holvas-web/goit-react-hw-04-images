@@ -1,6 +1,6 @@
 // ======= Рефакторинг коду з використанням React-хуків ========
 // import React, { Component } from 'react';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SearchBar } from './SearchBar/SearchBar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
@@ -14,9 +14,6 @@ export function App() {
   const [page, setPage] = useState(1);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  // useRef для збереження попереднього запиту
-  const prevQueryRef = useRef('');
 
   useEffect(() => {
     if (!query) return;
@@ -33,15 +30,7 @@ export function App() {
         setIsLoading(false);
       }
     };
-
-    if (query !== prevQueryRef.current) {
-      setImages([]);
-      setPage(1);
       fetchImagesData();
-      prevQueryRef.current = query;
-    } else {
-      alert(`You are already viewing results for ${query}`);
-    }
   }, [query, page]);
 
   const handleSearchFormSubmit = (newQuery) => {
