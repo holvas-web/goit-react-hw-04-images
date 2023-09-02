@@ -20,7 +20,7 @@ export function App() {
 
   useEffect(() => {
     if (!query) return;
-
+    
     const fetchImagesData = async () => {
       setIsLoading(true);
       try {
@@ -45,6 +45,7 @@ export function App() {
   }, [query, page]);
 
   const handleSearchFormSubmit = (newQuery) => {
+    console.log('Submitting search form. New query:', newQuery);
     if (newQuery !== query) {
       setQuery(newQuery);
       setPage(1);

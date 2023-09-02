@@ -25,7 +25,7 @@ export function Modal ({ image, onClose }) {
   return (
     <div className="Overlay" onClick={handleOverlayClick}>
       <div className="Modal">
-        <img src={image.largeImageURL} alt={image.tags} />
+        <img src={image} alt={image.title} />
       </div>
     </div>
   );

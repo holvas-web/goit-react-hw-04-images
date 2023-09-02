@@ -6,7 +6,6 @@ export const Button = ({ onClick, children }) => (
       {children}
     </button>
   </div>
-  
 );
 
 // export class Button extends Component {
